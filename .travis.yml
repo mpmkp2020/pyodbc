@@ -5,6 +5,9 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+arch:
+  - amd64
+  - arm64
 
 addons:
   apt:
