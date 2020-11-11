@@ -5,6 +5,9 @@ sudo: false
   #- "3.4"
   #- "3.5"
   #- "3.6"
+dist: bionic
+services: docker
+os: linux
 
 addons:
   apt:
@@ -14,15 +17,15 @@ addons:
     - gcc-4.8
     - g++-4.8
     - unixodbc-dev
-    
-os: linux
+
 jobs:
   exclude:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
-   -  os: linux
+    - stage: Build and test wheel
       name: ARM64-Linux-Py36
+      os: linux
       arch: arm64-graviton2
       dist: focal
       virt: vm
@@ -37,15 +40,15 @@ jobs:
         - echo "This stage will just build AArch64 wheel"
       workspaces:
         create:
-          name: ws2
+          name: ws1
           paths:
             - wheelhouse
       after_success:
         - echo "This stage will not upload aarch64 wheel"
    
     - stage: Test wheel
-    - arch: arm64-graviton2
       name: ARM64-Linux-Py36
+      arch: arm64-graviton2
       dist: focal
       virt: vm
       group: edge
@@ -56,7 +59,7 @@ jobs:
         - CYTHON_BUILD_DEP="Cython"
         - DOCKER_TEST_IMAGE=multibuild/xenial_arm64v8
       workspaces:
-        use: ws2
+        use: ws1
       install:
         - echo "This stage will test and upload the AArch64 wheel"
 
