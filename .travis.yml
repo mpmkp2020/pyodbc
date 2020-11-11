@@ -9,14 +9,14 @@ dist: bionic
 services: docker
 os: linux
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
-    - unixodbc-dev
+#addons:
+  #apt:
+    #sources:
+    #- ubuntu-toolchain-r-test
+    #packages:
+    #- gcc-4.8
+    #- g++-4.8
+    #- unixodbc-dev
 
 jobs:
   exclude:
