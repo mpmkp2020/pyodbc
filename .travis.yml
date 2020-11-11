@@ -6,8 +6,16 @@ sudo: false
   #- "3.5"
   #- "3.6"
 
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - unixodbc-dev
+    
 os: linux
-
 jobs:
   exclude:
       # Exclude the default Python 3.5 build
@@ -35,20 +43,6 @@ jobs:
       after_success:
         - echo "This stage will not upload aarch64 wheel"
    
-    - os: linux
-      name: amd64-Linux-Py36
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP=numpy==1.14.5
-        - NP_TEST_DEP=numpy==1.14.5
-    - os: linux
-      name: 32bit-amd64-Linux-Py36
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.14.5
-        - NP_TEST_DEP=numpy==1.14.5
-   
     - stage: Test wheel
     - arch: arm64-graviton2
       name: ARM64-Linux-Py36
@@ -65,15 +59,6 @@ jobs:
         use: ws2
       install:
         - echo "This stage will test and upload the AArch64 wheel"
-
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
-    - unixodbc-dev
 
 install:
   - python setup.py install
