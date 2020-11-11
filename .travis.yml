@@ -29,7 +29,7 @@ jobs:
         - DOCKER_IMAGE=quay.io/pypa/manylinux2014_${PLAT}
       script:
         - echo "This stage will just build AArch64 wheel"
-      workspaces: 
+      workspaces:
         create:
           name: ws2
           paths:
