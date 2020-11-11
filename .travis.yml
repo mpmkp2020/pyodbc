@@ -5,9 +5,7 @@ sudo: false
   #- "3.4"
   #- "3.5"
   #- "3.6"
-#arch:
-  #- amd64
-  #- arm64
+
 os: linux
 
 jobs:
