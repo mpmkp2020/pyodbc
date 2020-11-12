@@ -1,69 +1,71 @@
 language: python
-sudo: false
-#python:
-  #- "2.7"
-  #- "3.4"
-  #- "3.5"
-  #- "3.6"
-dist: bionic
-services: docker
-os: linux
-
-#addons:
-  #apt:
-    #sources:
-    #- ubuntu-toolchain-r-test
-    #packages:
-    #- gcc-4.8
-    #- g++-4.8
-    #- unixodbc-dev
-
-jobs:
-  exclude:
-      # Exclude the default Python 3.5 build
-      - python: 3.5
+cache:
+  directories:
+  - "$HOME/.cache/pip"
+  - "$HOME/.pyenv"
+matrix:
   include:
-    - stage: Build and test wheel
-      name: ARM64-Linux-Py36
-      os: linux
-      arch: arm64-graviton2
-      dist: focal
-      virt: vm
-      group: edge
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=aarch64
-        - NP_BUILD_DEP=numpy==1.19.1
-        - CYTHON_BUILD_DEP="Cython"
-        - DOCKER_IMAGE=quay.io/pypa/manylinux2014_${PLAT}
-      script:
-        - echo "This stage will just build AArch64 wheel"
-      workspaces:
-        create:
-          name: ws1
-          paths:
-            - wheelhouse
-      after_success:
-        - echo "This stage will not upload aarch64 wheel"
-   
-    - stage: Test wheel
-      name: ARM64-Linux-Py36
-      arch: arm64-graviton2
-      dist: focal
-      virt: vm
-      group: edge
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=aarch64
-        - NP_TEST_DEP=numpy==1.19.1
-        - CYTHON_BUILD_DEP="Cython"
-        - DOCKER_TEST_IMAGE=multibuild/xenial_arm64v8
-      workspaces:
-        use: ws1
-      install:
-        - echo "This stage will test and upload the AArch64 wheel"
-
+  - python: 2.6
+    dist: trusty
+  - python: 2.7
+  - python: 3.3
+    dist: trusty
+  - python: 3.4
+  - python: 3.5
+  - python: 3.6
+  - python: 3.6
+    arch: arm64
+  - python: 3.7
+  - python: 3.7
+    arch: arm64
+  - python: 3.8
+  - python: 3.8
+    arch: arm64
+  - python: pypy
+  - python: pypy3
+  - python: 3.8
+    services:
+    - docker
+    env:
+    - BUILD_SDIST=true
+    - BUILD_WHEEL=true
+  - python: 3.8
+    arch: arm64
+    services:
+    - docker
+    env: BUILD_WHEEL=true
+  - name: Python 2.7.17 on macOS
+    os: osx
+    language: objective-c
+    env: PYENV_VERSION=2.7.17
+  - name: Python 3.6.9 on macOS
+    os: osx
+    language: objective-c
+    env: PYENV_VERSION=3.6.9
+  - name: Python 3.7.5 on macOS
+    os: osx
+    osx_image: xcode11.3
+    language: objective-c
+    env: PYENV_VERSION=3.7.5
+  - name: Python 3.8.0 on macOS
+    os: osx
+    osx_image: xcode11.3
+    language: objective-c
+    env: PYENV_VERSION=3.8.0
 install:
-  - python setup.py install
-
-script: true
+- python setup.py install
+- "./.travis/install.sh"
+script:
+- "./.travis/run.sh"
+deploy:
+  provider: releases
+  file:
+  - dist/*.whl
+  - dist/*.tar.gz
+  file_glob: true
+  on:
+    repo: simplejson/simplejson
+    tags: true
+  skip_cleanup: true
+  api_key:
+    secure: FhcBCuL/33fsotaDLv157pQ0HpxYAXI9h4TNhT0CDgrh1i2J1m/hmJMqlrrn0j/E2TpYyXf1citLra6QrBP//FnFMGQ43el369tC3W9RPXYpfThzU6JcJecoWGQMMMiJgPLpOC7+tyDpphsNFKmySG/ITvX+OEZ4lzL8+1CWyRk=
