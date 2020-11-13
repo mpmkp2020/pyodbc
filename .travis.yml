@@ -39,11 +39,11 @@ addons:
     - unixodbc-dev
     
 install:
-  if [[ $BUILD_WHEEL == 'true' ]]; then
+  if [ $BUILD_WHEEL == true ]; then
     cibuildwheel --output-dir dist
   fi
 
 script:
-  if [[ $BUILD_WHEEL == 'true' ]]; then
+  if [ $BUILD_WHEEL == true ]; then
     cibuildwheel --output-dir dist
   fi
