@@ -1,5 +1,8 @@
 language: python
 
+env:
+  - CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
+  
 matrix:
   include:
   - python: 2.7
@@ -31,8 +34,6 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
-    - unixodbc
-    - unixodbc-dev
     
 install:
   - python setup.py install
