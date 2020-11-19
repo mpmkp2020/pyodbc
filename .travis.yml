@@ -39,7 +39,11 @@ addons:
     - unixodbc-dev
     
 install:
-  - if [ "$BUILD_WHEEL" == "true" ]; then pip install wheel cibuildwheel==1.5.2; fi
+  - if [ "$BUILD_WHEEL" == "true" ]; then 
+      pip install wheel cibuildwheel==1.5.2 ;
+    fi
 
 script:
-  - if [ "$BUILD_WHEEL" == "true" ]; then cibuildwheel --output-dir dist; fi
+  - if [ "$BUILD_WHEEL" == "true" ]; then 
+      cibuildwheel --output-dir dist ;
+    fi
