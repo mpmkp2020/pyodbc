@@ -36,7 +36,8 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
-    - unixodbc unixodbc-dev
+    - unixodbc
+    - unixodbc-dev
     
 install:
   - if [ "$BUILD_WHEEL" == "true" ]; then 
