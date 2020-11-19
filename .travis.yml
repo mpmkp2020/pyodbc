@@ -1,7 +1,9 @@
 language: python
 
 env:
-  - CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
+  #- CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
+  - CIBW_TEST_REQUIRES: apt-get install unixodbc unixodbc-dev
+  - CIBW_TEST_COMMAND: apt-get install unixodbc unixodbc-dev
   
 matrix:
   include:
