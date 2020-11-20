@@ -31,7 +31,7 @@ addons:
     - unixodbc-dev
     
 install:
-  - python setup.py install
+  #- python setup.py install
   - if [ "$BUILD_WHEEL" == "true" ]; then 
       pip install wheel cibuildwheel==1.5.2 ;
     fi
