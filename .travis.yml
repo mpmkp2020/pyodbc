@@ -1,7 +1,7 @@
 language: python
 sudo: true
 env:
-  - CIBW_BEFORE_BUILD: apt-get install unixodbc unixodbc-dev
+  - CIBW_BEFORE_BUILD: apt-get install unixodbc unixodbc-dev python-pytest
   #- CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
   #- CIBW_TEST_REQUIRES: apt-get install unixodbc unixodbc-dev
   #- CIBW_TEST_COMMAND: apt-get install unixodbc unixodbc-dev
@@ -32,6 +32,7 @@ addons:
     - gcc-4.8
     - g++-4.8
     - unixodbc-dev
+    - python-pytest
     
 install:
   - sudo apt install pytest
