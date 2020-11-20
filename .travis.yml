@@ -19,7 +19,7 @@ matrix:
       - docker
     env:
       - BUILD_WHEEL: true
-      #- CIBW_BEFORE_BUILD: yum install -y unixodbc unixodbc-dev unixODBC-devel
+      - CIBW_BEFORE_BUILD: "yum install -y unixodbc unixodbc-dev unixODBC-devel"
 
 addons:
   apt:
