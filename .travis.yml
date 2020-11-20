@@ -1,7 +1,4 @@
 language: python
-  #- CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
-  #- CIBW_TEST_REQUIRES: apt-get install unixodbc unixodbc-dev
-  #- CIBW_TEST_COMMAND: apt-get install unixodbc unixodbc-dev
   
 matrix:
   include:
@@ -20,7 +17,7 @@ matrix:
     services:
       - docker
     env:
-      - BUILD_WHEEL=true
+      - BUILD_WHEEL: true
       - CIBW_BEFORE_BUILD: yum install -y unixodbc unixodbc-dev unixODBC-devel
 
 addons:
