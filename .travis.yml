@@ -1,5 +1,5 @@
 language: python
-
+sudo: true
 env:
   - CIBW_BEFORE_BUILD: apt-get install unixodbc unixodbc-dev
   #- CIBW_BEFORE_ALL: apt-get install unixodbc unixodbc-dev
@@ -20,14 +20,8 @@ matrix:
   - python: 3.8
   - python: 3.8
     arch: arm64
-  - python: 3.8
     services:
-    - docker
-    env: BUILD_WHEEL=true
-  - python: 3.8
-    arch: arm64
-    services:
-    - docker
+      - docker
     env: BUILD_WHEEL=true
 
 addons:
@@ -37,14 +31,17 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
+    - unixodbc-dev
     
 install:
+  - sudo apt install pytest
   - python setup.py install
   - if [ "$BUILD_WHEEL" == "true" ]; then 
       pip install wheel cibuildwheel==1.5.2 ;
     fi
 
 script:
+  - pytest
   - true
   - if [ "$BUILD_WHEEL" == "true" ]; then 
       cibuildwheel --output-dir dist ;
