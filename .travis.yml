@@ -35,7 +35,6 @@ addons:
     - python-pytest
     
 install:
-  - sudo apt install pytest
   - python setup.py install
   - if [ "$BUILD_WHEEL" == "true" ]; then 
       pip install wheel cibuildwheel==1.5.2 ;
