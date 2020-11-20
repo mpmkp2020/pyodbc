@@ -40,5 +40,5 @@ install:
 script:
   - true
   - if [ "$BUILD_WHEEL" == "true" ]; then 
-      CIBW_BEFORE_ALL_LINUX: "yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
+      CIBW_BEFORE_ALL_LINUX="yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
     fi
