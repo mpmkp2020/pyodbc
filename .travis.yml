@@ -19,8 +19,8 @@ matrix:
       - docker
     env:
       - BUILD_WHEEL: true
-      - CIBW_BEFORE_BUILD: "yum install -y unixodbc" # unixodbc-dev unixODBC-devel"
-      - CIBW_BEFORE_ALL_LINUX: "yum install -y unixODBC-devel"
+      #- CIBW_BEFORE_BUILD: "yum install -y unixodbc" # unixodbc-dev unixODBC-devel"
+      #- CIBW_BEFORE_ALL_LINUX: "yum install -y unixODBC-devel"
 
 addons:
   apt:
@@ -40,5 +40,5 @@ install:
 script:
   - true
   - if [ "$BUILD_WHEEL" == "true" ]; then 
-      cibuildwheel --output-dir dist ;
+      CIBW_BEFORE_ALL_LINUX: "yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
     fi
