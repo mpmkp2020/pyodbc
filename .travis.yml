@@ -14,6 +14,16 @@ matrix:
   #- python: 3.8
   - os: linux
     python: 3.8
+    arch: amd64
+    services:
+      - docker
+    env:
+      - BUILD_WHEEL: true
+      #- CIBW_BEFORE_BUILD: "yum install -y unixodbc" # unixodbc-dev unixODBC-devel"
+      #- CIBW_BEFORE_ALL_LINUX: "yum install -y unixODBC-devel"
+
+  - os: linux
+    python: 3.8
     arch: arm64
     services:
       - docker
@@ -39,6 +49,8 @@ install:
 
 script:
   - true
-  - if [ "$BUILD_WHEEL" == "true" ]; then 
+  - if [ "$BUILD_WHEEL" == "true" ] && [ `uname -m` == "arch64" ]; then
       CIBW_BEFORE_ALL_LINUX="yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
+    else
+      CIBW_BEFORE_ALL_LINUX="yum install -y unixodbc unixodbc-dev" cibuildwheel --output-dir dist ;
     fi
