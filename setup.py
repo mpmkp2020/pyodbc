@@ -261,9 +261,11 @@ def get_version():
     name, numbers = _get_version_pkginfo()
 
     # If not a source release, we should be in a git repository.  Look for the latest tag.
-
+    print("Madhukar1: %s %s" % (name, numbers));
     if not numbers:
         name, numbers = _get_version_git()
+
+    print("Madhukar6: %s %s" % (name, numbers));
 
     if not numbers:
         _print('WARNING: Unable to determine version.  Using 4.0.0.0')
@@ -289,17 +291,20 @@ def _get_version_pkginfo():
 
 def _get_version_git():
     n, result = getoutput("git describe --tags --match [0-9]*")
+    print("Madhukar2: %s %s" % (n, result));
     if n:
         _print('WARNING: git describe failed with: %s %s' % (n, result))
         return None, None
-
     match = re.match(r'(\d+).(\d+).(\d+) (?: -(\d+)-g[0-9a-z]+)?', result, re.VERBOSE)
+    print("Madhukar3: %s" % (result));
     if not match:
         return None, None
 
     numbers = [int(n or OFFICIAL_BUILD) for n in match.groups()]
+    print("Madhukar4: %s" %numbers);
     if numbers[-1] == OFFICIAL_BUILD:
         name = '%s.%s.%s' % tuple(numbers[:3])
+    print("Madhukar5: %s" %numbers);
     if numbers[-1] != OFFICIAL_BUILD:
         # This is a beta of the next micro release, so increment the micro number to reflect this.
         numbers[-2] += 1
