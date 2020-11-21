@@ -49,8 +49,8 @@ install:
 
 script:
   - true
-  - if [ "$BUILD_WHEEL" == "true" ] && [ `uname -m` == "arch64" ]; then
-      CIBW_BEFORE_ALL_LINUX="yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
+  - if [ "$BUILD_WHEEL" == "true" ] && [ `uname -m` == "aarch64" ]; then
+      CIBW_BEFORE_BUILD="yum install -y unixODBC-devel" cibuildwheel --output-dir dist ;
     else
-      CIBW_BEFORE_ALL_LINUX="yum install -y unixodbc unixodbc-dev" cibuildwheel --output-dir dist ;
+      CIBW_BEFORE_BUILD="apt-get install -y unixodbc unixodbc-dev" cibuildwheel --output-dir dist ;
     fi
